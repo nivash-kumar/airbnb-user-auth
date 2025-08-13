@@ -30,7 +30,7 @@ app.use(express.static(path.join(rootDir, 'public')));
 ///always add 404 routes in the bottom of the code
 app.use(errorController.pageNotFound);
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Server is running on address http://localhost:${port}`);
 });

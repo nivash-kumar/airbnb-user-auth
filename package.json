@@ -9,8 +9,10 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tailwind": "tailwindcss -i .views/input.css -o ./public/output.css --watch",
-    "start": "nodemon app.js & npm run tailwind"
+    "tailwind": "tailwindcss -i ./views/input.css -o ./public/output.css",
+    "build": "npm run tailwind",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.1.11",
