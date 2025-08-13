@@ -1,0 +1,76 @@
+<%- include('../partials/head') %>
+    </head>
+
+    <body class="bg-gray-50 min-h-screen">
+        <%- include('../partials/nav') %>
+
+            <main class="container mx-auto px-4 py-12 mt-10">
+                <h2 class="text-3xl font-bold  text-center mb-10  text-pink-600">
+                    🏠 Explore Our Homes
+                </h2>
+
+                <!-- Responsive Grid -->
+                <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                    <% registeredHomes.forEach(home=> { %>
+                        <li class="group">
+                            <!-- Card -->
+                            <div
+                                class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow duration-300">
+
+                                <!-- Image Wrapper -->
+                                <div class="relative w-full h-60">
+                                    <img src="<%= home.photoUrl %>" alt="<%= home.houseName %>"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+
+                                    <!-- Wishlist Heart -->
+                                    <form action="/favourites" method="post"
+                                    class="absolute top-3 right-3 bg-white rounded-full p-2 shadow hover:scale-110 transition">
+                                        <button type="submit" class="w-full h-full">❤️</button>
+                                        <input type="hidden" name="homeId" value="<%= home.id %>">
+                                    </form>
+
+                                    <!-- Rating -->
+                                    <div
+                                        class="absolute bottom-3 left-3 bg-white text-gray-900 text-sm font-semibold px-3 py-1 rounded-full shadow">
+                                        ⭐ <%= home.rating %>
+                                    </div>
+                                </div>
+
+                                <!-- Details -->
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start">
+                                        <!-- Home Name & Location -->
+                                        <div>
+                                            <h3 class="text-lg font-bold text-gray-900 truncate">
+                                                <%= home.houseName %>
+                                            </h3>
+                                            <p class="text-sm text-gray-500">
+                                                <%= home.city %>
+                                            </p>
+                                        </div>
+                                        <!-- Price -->
+                                        <span class="text-lg font-semibold text-gray-900">₹<%= home.price %></span>
+                                    </div>
+
+                                    <!-- Address -->
+                                    <p class="mt-2 text-sm text-gray-600 line-clamp-2">
+                                        <%= home.address %>
+                                    </p>
+
+                                    <!-- CTA -->
+                                    <div class="justify-around sm:flex-nowrap flex-wrap gap-2 mt-4 flex ">
+                                        <a href="/homes/<%= home.id %>"
+                                            class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-900 text-sm font-semibold py-2 rounded-lg transition text-center">
+                                            Details
+                                        </a>
+                                        <%- include('../partials/favourite', { home: home }) %>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <% }) %>
+                </ul>
+            </main>
+    </body>
+
+</html>

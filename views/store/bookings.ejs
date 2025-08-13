@@ -1,0 +1,68 @@
+
+
+<%- include('../partials/head') %>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <%- include('../partials/nav') %>
+
+  <main class="container mx-auto mt-20 px-4">
+    <h2 class="text-4xl sm:text-6xl font-bold text-pink-600 text-center mb-4">
+      My Bookings
+    </h2>
+
+    <%// if (bookings && bookings.length > 0) { %>
+      <!-- Bookings Grid -->
+      <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-10">
+        <%// bookings.forEach(home => { %>
+          <li class="relative group">
+            <!-- Card -->
+            <a href="/homes/<%=// home.id %>" class="block bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition duration-300">
+
+              <!-- Image -->
+              <div class="relative w-full h-60">
+                <img src="<%=// home.photoUrl %>" 
+                     alt="<%=// home.houseName %>" 
+                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+
+                <!-- Status Badge -->
+                <div class="absolute top-3 left-3 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow">
+                  ✅ Booked
+                </div>
+
+                <!-- Check-In Date -->
+                <div class="absolute bottom-3 left-3 bg-white px-3 py-1 rounded-full text-gray-900 text-sm font-semibold shadow">
+                  📅 <%=// home.checkInDate %>
+                </div>
+              </div>
+
+              <!-- Info -->
+              <div class="p-4">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <h3 class="text-lg font-bold text-gray-900 truncate"><%=// home.houseName %></h3>
+                    <p class="text-sm text-gray-500"><%=// home.city %></p>
+                  </div>
+                  <span class="text-lg font-semibold text-gray-900">₹<%=// home.price %>/night</span>
+                </div>
+                <p class="mt-2 text-sm text-gray-600 line-clamp-2">
+                  <%=// home.address %>
+                </p>
+              </div>
+            </a>
+          </li>
+        <%// }) %>
+      </ul>
+
+    <%// } else { %>
+      <!-- Empty State -->
+      <div class="flex flex-col items-center justify-center mt-20">
+        <img src="https://cdn-icons-png.flaticon.com/512/4076/4076504.png" alt="No bookings" class="w-40 mb-6 opacity-80">
+        <p class="text-2xl text-gray-600 mb-6">You have no bookings yet</p>
+        <a href="/" class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-3 rounded-xl shadow transition text-lg">
+          Find a Home
+        </a>
+      </div>
+    <%// } %>
+  </main>
+</body>
+</html>

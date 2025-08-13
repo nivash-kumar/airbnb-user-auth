@@ -1,0 +1,77 @@
+<%- include('../partials/head') %>
+    </head>
+
+    <body class="bg-gray-50 min-h-screen">
+        <%- include('../partials/nav') %>
+
+            <main class="container mx-auto px-4 py-10 mt-10">
+                <h2 class="text-3xl sm:text-4xl font-bold text-pink-600 text-center mb-10">
+                    🏠 Hey Host, Here’s Your Home List
+                </h2>
+
+                <% if (registeredHomes && registeredHomes.length> 0) { %>
+                    <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                        <% registeredHomes.forEach(home=> { %>
+                            <li
+                                class="bg-white rounded-xl shadow-sm hover:shadow-lg transition duration-300 overflow-hidden">
+                                <!-- Image Section -->
+                                <div class="relative w-full h-56">
+                                    <img src="<%= home.photoUrl %>" alt="<%= home.houseName %>"
+                                        class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                                    <!-- Rating Badge -->
+                                    <span
+                                        class="absolute top-3 left-3 bg-white px-3 py-1 rounded-full text-gray-900 font-semibold shadow">
+                                        ⭐ <%= home.rating %>
+                                    </span>
+                                    <!-- Price Badge -->
+                                    <span
+                                        class="absolute top-3 right-3 bg-pink-600 text-white px-3 py-1 rounded-full text-sm font-semibold shadow">
+                                        ₹<%= home.price %>/night
+                                    </span>
+                                </div>
+
+                                <!-- Info Section -->
+                                <div class="p-4">
+                                    <h3 class="text-lg font-bold text-gray-900 truncate">
+                                        <%= home.houseName %>
+                                    </h3>
+                                    <p class="text-sm text-gray-500">
+                                        <%= home.city %>
+                                    </p>
+                                    <p class="mt-1 text-sm text-gray-600 line-clamp-2">
+                                        <%= home.address %>
+                                    </p>
+
+                                    <!-- Action Buttons -->
+                                    <div class="mt-4 flex gap-2">
+                                        <a href="/host/edit-home/<%= home.id %>?editing=true"
+                                            class="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg text-center font-semibold transition">
+                                            ✏️ Edit
+                                        </a>
+                                        <form action="/host/delete-home/<%= home.id %>" method="post" class="flex-1">
+                                            <button type="submit"
+                                                class="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg font-semibold transition">
+                                                🗑 Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </li>
+                            <% }) %>
+                    </ul>
+                    <% } else { %>
+                        <!-- Empty State -->
+                        <div class="flex flex-col items-center mt-20">
+                            <img src="https://cdn-icons-png.flaticon.com/512/4076/4076504.png" alt="No Homes"
+                                class="w-32 mb-6 opacity-80">
+                            <p class="text-lg text-gray-600 mb-4">You haven’t listed any homes yet.</p>
+                            <a href="/host/add-home"
+                                class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-3 rounded-xl shadow transition text-lg">
+                                ➕ Add Your First Home
+                            </a>
+                        </div>
+                        <% } %>
+            </main>
+    </body>
+
+    </html>

@@ -1,0 +1,81 @@
+<%- include('../partials/head') %>
+    </head>
+
+    <body class="bg-gray-50 min-h-screen">
+        <%- include('../partials/nav') %>
+
+            <main class="container mx-auto px-4 py-10 mt-10">
+                <h2 class="text-3xl font-bold text-pink-600 text-center mb-10">
+                    ❤️ Your Favourite Homes
+                </h2>
+
+                <!-- Responsive Grid -->
+                <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                    <% registeredHomes.forEach(home=> { %>
+                        <li class="relative group">
+                            <!-- Entire Card Clickable for Details -->
+                            <a href="/homes/<%= home.id %>"
+                                class="block bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-all duration-300">
+
+                                <!-- Image Section -->
+                                <div class="relative w-full h-60 overflow-hidden">
+                                    <img src="<%= home.photoUrl %>" alt="<%= home.houseName %>"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+
+                                    <!-- Active Favourite Heart -->
+                                    <button type="button" onclick="event.preventDefault()"
+                                        class="absolute top-3 right-3 bg-white rounded-full p-2 shadow hover:scale-110 transition">
+                                        <span class="text-pink-600 text-xl">❤️</span>
+                                    </button>
+
+                                    <!-- Rating Badge -->
+                                    <div
+                                        class="absolute top-3 left-3 bg-white px-3 py-1 rounded-full text-gray-900 font-semibold shadow">
+                                        ⭐ <%= home.rating %>
+                                    </div>
+
+                                    <!-- Book Now Overlay -->
+                                    <div
+                                        class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <button
+                                            class="bg-pink-600 hover:bg-pink-700 text-white px-5 py-2 rounded-lg font-semibold shadow-lg transition">
+                                            Book Now
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Info Section -->
+                                <div class="p-4">
+                                    <div class="flex justify-between items-start flex-wrap">
+                                        <div>
+                                            <h3 class="text-lg font-bold text-gray-900 truncate">
+                                                <%= home.houseName %>
+                                            </h3>
+                                            <p class="text-sm text-gray-500">
+                                                <%= home.city %>
+                                            </p>
+                                            <p class="mt-2 text-sm text-gray-600 line-clamp-2">
+                                                <%= home.address %>
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <span class="text-lg font-semibold text-gray-900">₹<%= home.price %>
+                                                    /night</span>
+
+                                            <form action="/favourites/delete/<%= home.id %>" method="post"
+                                                class="flex flex-1 justify-center w-auto shadow-lg hover:scale-110 transition  bg-pink-600 hover:bg-pink-700 text-white p-2  rounded-lg mt-2">
+                                                <button type="delete" class=" font-semibold text-center flex-1">
+                                                    Remove</button>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </a>
+                        </li>
+                        <% }) %>
+                </ul>
+            </main>
+    </body>
+
+    </html>
