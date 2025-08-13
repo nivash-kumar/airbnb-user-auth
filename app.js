@@ -3,6 +3,7 @@ const path = require("path");
 
 //External module...
 const express = require("express");
+require('dotenv').config();
 
 
 //Local Module....
