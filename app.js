@@ -1,7 +1,7 @@
 //Core modules
 const path = require("path");
 
-//External module...
+//External modules...
 const express = require("express");
 require('dotenv').config();
 
@@ -9,8 +9,10 @@ require('dotenv').config();
 //Local Module....
 const storeRouter = require("./routes/storeRouter");
 const hostRouter = require("./routes/hostRouter");
+const contactinfoRouter = require("./routes/contactInfoRouter");
 const rootDir = require("./utils/pathUtil");
-const errorController = require("./controllers/errorController")
+const errorController = require("./controllers/errorController");
+
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -22,9 +24,10 @@ app.use((req, res, next) => {
 });
 
 app.use(express.urlencoded());
-//// Uses our Routers
+//// Uses our routers
 app.use(storeRouter);
 app.use("/host", hostRouter);
+app.use(contactinfoRouter);
 app.use(express.static(path.join(rootDir, 'public')));
 
 

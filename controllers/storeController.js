@@ -28,7 +28,7 @@ exports.getBookings = (req, res, next) => {
 
 };
 
-exports.getfavouriteList = (req, res, next) => {
+exports.getFavouriteList = (req, res, next) => {
   Favourite.getFavourites((favouriteIds) => {
     if (favouriteIds.length === 0) {
       // No favourites, render empty list
@@ -79,33 +79,15 @@ exports.getHomesDetails = (req, res, next) => {
         pageTitle: 'Home Detail', currentPage: 'home', home: home
       });
     }
-
   });
 };
-
 
 exports.postRemoveFromFavourite = (req, res, next) => {
   const homeId = req.params.homeId;
   Favourite.deleteById(homeId, error => {
     if (error) {
       console.log('Error while removing from Favourite', error);
-    }
+    };
     res.redirect("/favourites");
-  })
-}
-
-exports.getcontactUs = (req, res, next) =>{
-  console.log("get contact called");
-  res.render("store/contact-us",{
-    pageTitle : "contact-Us",
-    currentPage : "contact-us"
   });
-}
-
-exports.postcontactUs = (req, res, next) =>{
-  // console.log(`contact info: ${req.body.name}, ${req.body.email}`);
-  const { name, phone, message, email} = req.body;
-
-  res.redirect('/homes');
 };
-

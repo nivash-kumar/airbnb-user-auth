@@ -4,19 +4,38 @@ const path = require('path');
 const rootDir = require("../utils/pathUtil");
 const Favourite = require('./favourite');
 
+//local functions
+const { trimObjString } = require("../utlity/utlityFunction");
+
 // data path
 const homeDataPath = path.join(rootDir, 'data', 'homes.json');
 
 module.exports = class Home {
     constructor(houseName, ownerName, price, city, address, rating, photoUrl, contactNumber) {
-        this.houseName = houseName;
-        this.ownerName = ownerName;
-        this.price = price;
-        this.city = city;
-        this.rating = rating;
-        this.photoUrl = photoUrl;
-        this.address = address;
-        this.contactNumber = contactNumber;
+        // Create an object with all the input values
+        const homeData = {
+            houseName,
+            ownerName,
+            price,
+            city,
+            address,
+            rating,
+            photoUrl,
+            contactNumber
+        };
+
+        // Use utility function to trim all string values
+        const trimmedData = trimObjString(homeData);
+
+        // Assign trimmed values to instance properties
+        this.houseName = trimmedData.houseName;
+        this.ownerName = trimmedData.ownerName;
+        this.price = trimmedData.price;
+        this.city = trimmedData.city;
+        this.rating = trimmedData.rating;
+        this.photoUrl = trimmedData.photoUrl;
+        this.address = trimmedData.address;
+        this.contactNumber = trimmedData.contactNumber;
     }
     
     save() {
