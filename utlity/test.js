@@ -5,10 +5,10 @@ console.log('=== Testing Utility Functions ===\n');
 
 // Test 1: Basic object with string values
 const testObj1 = {
-    name: '   John Doe   ',
-    email: '  john@example.com  ',
+    name: '   Nivash Singh  ',
+    email: '  Nivash@example.com  ',
     age: 25,
-    city: '  New York  ',
+    city: '  Patna  ',
     isActive: true
 };
 
@@ -21,10 +21,10 @@ console.log('---\n');
 // Test 2: Nested object
 const testObj2 = {
     user: {
-        name: '   Jane Smith   ',
+        name: '   Amit singh       ',
         address: {
             street: '  123 Main St   ',
-            city: '  Boston  '
+            city: '  Pune  '
         }
     },
     settings: {
