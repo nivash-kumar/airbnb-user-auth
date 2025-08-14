@@ -8,7 +8,7 @@ const Favourite = require('./favourite');
 const homeDataPath = path.join(rootDir, 'data', 'homes.json');
 
 module.exports = class Home {
-    constructor(houseName, ownerName, price, city, address, rating, photoUrl, contectNumber) {
+    constructor(houseName, ownerName, price, city, address, rating, photoUrl, contactNumber) {
         this.houseName = houseName;
         this.ownerName = ownerName;
         this.price = price;
@@ -16,7 +16,7 @@ module.exports = class Home {
         this.rating = rating;
         this.photoUrl = photoUrl;
         this.address = address;
-        this.contectNumber = contectNumber;
+        this.contactNumber = contactNumber;
     }
     
     save() {

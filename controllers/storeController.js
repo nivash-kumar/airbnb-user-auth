@@ -94,16 +94,16 @@ exports.postRemoveFromFavourite = (req, res, next) => {
   })
 }
 
-exports.getContectUs = (req, res, next) =>{
-  console.log("get contect called");
-  res.render("store/contect-us",{
-    pageTitle : "Contect-Us",
-    currentPage : "contect-us"
+exports.getcontactUs = (req, res, next) =>{
+  console.log("get contact called");
+  res.render("store/contact-us",{
+    pageTitle : "contact-Us",
+    currentPage : "contact-us"
   });
 }
 
-exports.postContectUs = (req, res, next) =>{
-  // console.log(`Contect info: ${req.body.name}, ${req.body.email}`);
+exports.postcontactUs = (req, res, next) =>{
+  // console.log(`contact info: ${req.body.name}, ${req.body.email}`);
   const { name, phone, message, email} = req.body;
 
   res.redirect('/homes');
