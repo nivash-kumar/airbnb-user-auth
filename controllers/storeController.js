@@ -94,4 +94,18 @@ exports.postRemoveFromFavourite = (req, res, next) => {
   })
 }
 
+exports.getContectUs = (req, res, next) =>{
+  console.log("get contect called");
+  res.render("store/contect-us",{
+    pageTitle : "Contect-Us",
+    currentPage : "contect-us"
+  });
+}
+
+exports.postContectUs = (req, res, next) =>{
+  // console.log(`Contect info: ${req.body.name}, ${req.body.email}`);
+  const { name, phone, message, email} = req.body;
+
+  res.redirect('/homes');
+};
 

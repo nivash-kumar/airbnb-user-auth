@@ -43,6 +43,13 @@
           Host Home
         </a>
       </li>
+      <li>
+        <a href="/contect-us"
+          class="py-2 px-4 rounded-md transition duration-200 
+           <%= currentPage === 'contect-us' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">
+          Contect-us
+        </a>
+      </li>
     </ul>
 
     <!-- Mobile Menu Button -->
@@ -67,6 +74,9 @@
     <a href="/host/home-list"
       class="block p-2 rounded-md <%= currentPage === 'host-homes' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">Host
       Home</a>
+    <a href="/contect-us"
+      class="block p-2 rounded-md <%= currentPage === 'contect-us' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">Host
+      contect-us</a>
   </div>
 
   <script>
@@ -78,7 +88,7 @@
     const link = document.getElementById('bookings');
     link.addEventListener('click', function (event) {
       event.preventDefault(); // Prevents navigation
-      alert('This link is disabled.');
+      alert('This link is disabled on this time.');
     });
   </script>
 </header>

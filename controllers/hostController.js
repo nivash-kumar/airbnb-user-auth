@@ -69,5 +69,5 @@ exports.getHostHomes = (req, res, next) => {
       }
       console.log(homeId);
     res.redirect('/host/home-list');
-    });
+    }); 
   }
