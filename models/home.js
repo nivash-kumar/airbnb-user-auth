@@ -27,7 +27,6 @@ module.exports = class Home {
         // Use utility function to trim all string values
         const trimmedData = trimObjString(homeData);
 
-        // Assign trimmed values to instance properties
         this.houseName = trimmedData.houseName;
         this.ownerName = trimmedData.ownerName;
         this.price = trimmedData.price;
