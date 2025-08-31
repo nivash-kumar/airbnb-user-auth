@@ -26,7 +26,7 @@
                                     <form action="/favourites" method="post"
                                     class="absolute top-3 right-3 bg-white rounded-full p-2 shadow hover:scale-110 transition">
                                         <button type="submit" class="w-full h-full">❤️</button>
-                                        <input type="hidden" name="homeId" value="<%= home.id %>">
+                                        <input type="hidden" name="homeId" value="<%= home._id %>">
                                     </form>
 
                                     <!-- Rating -->
@@ -59,7 +59,7 @@
 
                                     <!-- CTA -->
                                     <div class="justify-around sm:flex-nowrap flex-wrap gap-2 mt-4 flex ">
-                                        <a href="/homes/<%= home.id %>"
+                                        <a href="/homes/<%= home._id %>"
                                             class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-900 text-sm font-semibold py-2 rounded-lg transition text-center">
                                             Details
                                         </a>
@@ -68,7 +68,7 @@
                                 </div>
                             </div>
                         </li>
-                        <% }) %>
+                    <% }) %>
                 </ul>
             </main>
     </body>

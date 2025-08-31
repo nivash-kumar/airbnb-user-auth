@@ -4,70 +4,87 @@ exports.getAddHome = (req, res, next) => {
   res.render("host/edit-home", {
     pageTitle: "Add Home to airbnb",
     currentPage: "addHome",
-    editing : false,
+    editing: false,
+    isLoggedIn: req.isLoggedIn
   });
 };
 
 exports.postAddHome = (req, res, next) => {
   // console.log(`Home registration successful for: `, req.body, req.body.houseName);
-  const { houseName, ownerName, price, city, address, rating, photoUrl, contactNumber } = req.body;
+  const { houseName, ownerName, price, city, address, rating, photoUrl, contactNumber, description } = req.body;
   // registeredHomes.push(req.body);
-  const home = new Home(houseName, ownerName, price, city, address, rating, photoUrl, contactNumber)
-  home.save();
+  const home = new Home({houseName, ownerName, price, city, address, rating, photoUrl, contactNumber, description})
+  home.save().then(()=>{
+    console.log("Home Registered Successfully");
+  });
   res.redirect('/host/home-list');
-}
+};
 
 exports.getHostHomes = (req, res, next) => {
-  Home.fetchAll((registeredHomes) => {
+  Home.find().then(registeredHomes => {
     res.render('host/host-home-list', {
       registeredHomes: registeredHomes,
-      pageTitle: 'Host-Home', 
-      currentPage: 'host-homes'
+      pageTitle: 'Host-Home',
+      currentPage: 'host-homes',
+      isLoggedIn: req.isLoggedIn
     });
   });
 }
 
 
-  exports.getEditHome = (req, res, next) => {
-    const homeId = req.params.homeId;
-    const editing = req.query.editing === 'true';
-    Home.findById(homeId, home =>{
-      if(!home){
-        console.log("Home not found");
-        res.redirect("/host/home-list");
-        return;
-      };
+exports.getEditHome = (req, res, next) => {
+  const homeId = req.params.homeId;
+  const editing = req.query.editing === 'true';
 
-      console.log(homeId, editing, home);
-      res.render("host/edit-home", { //render sends html  and redirect sends url of page
-        home : home,
-        pageTitle: "Edit Home to airbnb",
-        currentPage: "host-home",
-        editing: editing,
-      });
+  Home.findById(homeId).then(home => {
+    if (!home) {
+      console.log("Home not found for editing.");
+      return res.redirect("/host/host-home-list");
+    }
+
+    console.log(homeId, editing, home);
+    res.render("host/edit-home", {
+      home: home,
+      pageTitle: "Edit your Home",
+      currentPage: "host-homes",
+      editing: editing,
+      isLoggedIn: req.isLoggedIn
     });
+  });
+};
 
-  };
+exports.postEditHome = (req, res, next) => {
+  // console.log(`Home registration successful for: `, req.body, req.body.houseName);
+  const { id, houseName, ownerName, price, city, address, rating, photoUrl, contactNumber, description } = req.body;
 
-  exports.postEditHome = (req, res, next) => {
-    // console.log(`Home registration successful for: `, req.body, req.body.houseName);
-    const {id, houseName, ownerName, price, city, address, rating, photoUrl, contactNumber } = req.body;
-    // registeredHomes.push(req.body);
-    const home = new Home(houseName, ownerName, price, city, address, rating, photoUrl, contactNumber);
-    home.id = id;
-    home.save();
+ Home.findById(id).then((home) =>{
+  home.houseName = houseName;
+  home.ownerName = ownerName;
+  home.price = price;
+  home.city = city;
+  home.address = address;
+  home.rating = rating;
+  home.photoUrl = photoUrl;
+  home.contactNumber = contactNumber;
+  home.description = description;
+  home.save().then((result) => {
+    console.log("Home update:",result);
+  }).catch(err => {
+    console.log("Error while updating", err);
+  })
+  res.redirect('/host/home-list');
+ }).catch(err => {
+  console.log("Error while finding home",err);
+ });
+};
+
+
+exports.postDeleteHome = (req, res, next) => {
+  const homeId = req.params.homeId;
+  Home.findByIdAndDelete(homeId).then(() => {
     res.redirect('/host/home-list');
-  }
-
-
-  exports.postDeleteHome = (req, res, next) => {
-    const homeId = req.params.homeId;
-    console.log("Came to delete Home Id", homeId);
-    Home.deleteById(homeId, error =>{
-      if(error) {
-        console.log("Enter while Deleting", error );
-      }
-      console.log(homeId);
+  }).catch(err =>{
+    console.log("Error while deleting home:", err);
     res.redirect('/host/home-list');
-    }); 
-  }
+  })
+}

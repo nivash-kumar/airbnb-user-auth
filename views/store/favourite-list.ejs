@@ -11,10 +11,10 @@
 
                 <!-- Responsive Grid -->
                 <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-                    <% registeredHomes.forEach(home=> { %>
+                    <% favouriteHomes.forEach(home => { %>
                         <li class="relative group">
                             <!-- Entire Card Clickable for Details -->
-                            <a href="/homes/<%= home.id %>"
+                            <a href="/homes/<%= home._id %>"
                                 class="block bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-all duration-300">
 
                                 <!-- Image Section -->
@@ -62,7 +62,7 @@
                                             <span class="text-lg font-semibold text-gray-900">₹<%= home.price %>
                                                     /night</span>
 
-                                            <form action="/favourites/delete/<%= home.id %>" method="post"
+                                            <form action="/favourites/delete/<%= home._id %>" method="post"
                                                 class="flex flex-1 justify-center w-auto shadow-lg hover:scale-110 transition  bg-pink-600 hover:bg-pink-700 text-white p-2  rounded-lg mt-2">
                                                 <button type="submit" class=" font-semibold text-center flex-1">
                                                     Remove</button>
@@ -73,7 +73,7 @@
                                 </div>
                             </a>
                         </li>
-                        <% }) %>
+                    <% }) %>
                 </ul>
             </main>
     </body>

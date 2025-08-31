@@ -8,48 +8,50 @@
 
     <!-- Desktop Menu -->
     <ul class="hidden md:flex space-x-1">
-      <li>
-        <a href="/homes"
-          class="py-2 px-4 rounded-md transition duration-200 
+      <% if(isLoggedIn) { %>
+        <li>
+          <a href="/homes"
+            class="py-2 px-4 rounded-md transition duration-200 
            <%= currentPage === 'homes' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">
-          Homes
-        </a>
-      </li>
-      <li>
-        <a href="/bookings" type="disabled" id="bookings"
-          class="disabled py-2 px-4 rounded-md transition duration-200 
+            Homes
+          </a>
+        </li>
+        <li>
+          <a href="/bookings" type="disabled" id="bookings"
+            class="disabled py-2 px-4 rounded-md transition duration-200 
            <%= currentPage === 'bookings' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">
-          Bookings
-        </a>
-      </li>
-      <li>
-        <a href="/favourites"
-          class="py-2 px-4 rounded-md transition duration-200 
+            Bookings
+          </a>
+        </li>
+        <li>
+          <a href="/favourites"
+            class="py-2 px-4 rounded-md transition duration-200 
            <%= currentPage === 'favourites' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">
-          Favourites
-        </a>
-      </li>
-      <li>
-        <a href="/host/add-home"
-          class="py-2 px-4 rounded-md transition duration-200 
+            Favourites
+          </a>
+        </li>
+        <li>
+          <a href="/host/add-home"
+            class="py-2 px-4 rounded-md transition duration-200 
            <%= currentPage === 'addHome' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">
-          Add Home
-        </a>
-      </li>
-      <li>
-        <a href="/host/home-list"
-          class="py-2 px-4 rounded-md transition duration-200 
+            Add Home
+          </a>
+        </li>
+        <li>
+          <a href="/host/home-list"
+            class="py-2 px-4 rounded-md transition duration-200 
            <%= currentPage === 'host-homes' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">
-          Host Home
-        </a>
-      </li>
-      <li>
-        <a href="/contact-us"
-          class="py-2 px-4 rounded-md transition duration-200 
-           <%= currentPage === 'contact-us' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">
-          Contact Us
-        </a>
-      </li>
+            Host Home
+          </a>
+        </li>
+        <% } %>
+          <li>
+            <a href="/login"
+              class="py-2 px-4 rounded-md transition duration-200 
+           <%= currentPage === 'login' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">
+              LogIn
+            </a>
+          </li>
     </ul>
 
     <!-- Mobile Menu Button -->
@@ -62,6 +64,7 @@
 
   <!-- Mobile Menu -->
   <div class="md:hidden hidden flex-col space-y-1 bg-white border-t border-gray-200 px-4 pb-4" id="mobile-menu">
+    <% if(isLoggedIn) { %>
     <a href="/homes"
       class="block p-2 rounded-md <%= currentPage === 'homes' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">Homes</a>
     <a href="/bookings"
@@ -74,8 +77,9 @@
     <a href="/host/home-list"
       class="block p-2 rounded-md <%= currentPage === 'host-homes' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">Host
       Home</a>
-    <a href="/contact-us"
-      class="block p-2 rounded-md <%= currentPage === 'contact-us' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">Contact-us</a>
+      <% } %>
+    <a href="/login"
+      class="block p-2 rounded-md <%= currentPage === 'login' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">LogIn</a>
   </div>
 
   <script>
