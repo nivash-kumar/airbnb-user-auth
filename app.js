@@ -32,7 +32,8 @@ app.use((req, res, next) => {
 //// Uses our routers
 app.use(express.static(path.join(rootDir, "public")));
 app.use(authRouter);
-app.use(storeRouter);
+app.use(storeRouter); 
+app.use("/host",hostRouter); 
 
 const port = 4000;
 const DB_PATH ="mongodb+srv://SinghKN:singhknwork@singhkn.v0hajwv.mongodb.net/airbnb?retryWrites=true&w=majority&appName=singhKn";
