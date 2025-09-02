@@ -7,7 +7,7 @@
     </a>
 
     <!-- Desktop Menu -->
-    <ul class="hidden md:flex space-x-1">
+    <ul class="hidden md:flex space-x-1 items-center align-middle">
       <% if(isLoggedIn) { %>
         <li>
           <a href="/homes"
@@ -44,7 +44,13 @@
             Host Home
           </a>
         </li>
-        <% } %>
+        <li>
+          <form action="/logout" method="post" class="w-full flex justify-center">
+            <button type="submit"
+              class="py-2 px-4 rounded-md transition duration-200 text-gray-700 hover:bg-gray-100">Log Out</button>
+          </form>
+        </li>
+        <% }else{ %>
           <li>
             <a href="/login"
               class="py-2 px-4 rounded-md transition duration-200 
@@ -52,6 +58,7 @@
               LogIn
             </a>
           </li>
+          <% } %>
     </ul>
 
     <!-- Mobile Menu Button -->
@@ -65,23 +72,29 @@
   <!-- Mobile Menu -->
   <div class="md:hidden hidden flex-col space-y-1 bg-white border-t border-gray-200 px-4 pb-4" id="mobile-menu">
     <% if(isLoggedIn) { %>
-    <a href="/homes"
-      class="block p-2 rounded-md <%= currentPage === 'homes' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">Homes</a>
-    <a href="/bookings"
-      class="block p-2 rounded-md <%= currentPage === 'bookings' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">Bookings</a>
-    <a href="/favourites"
-      class="block p-2 rounded-md <%= currentPage === 'favourites' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">Favourites</a>
-    <a href="/host/add-home"
-      class="block p-2 rounded-md <%= currentPage === 'addHome' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">Add
-      Home</a>
-    <a href="/host/home-list"
-      class="block p-2 rounded-md <%= currentPage === 'host-homes' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">Host
-      Home</a>
-      <% } %>
-    <a href="/login"
-      class="block p-2 rounded-md <%= currentPage === 'login' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">LogIn</a>
+      <a href="/homes"
+        class="block p-2 rounded-md <%= currentPage === 'homes' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">Homes</a>
+      <a href="/bookings"
+        class="block p-2 rounded-md <%= currentPage === 'bookings' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">Bookings</a>
+      <a href="/favourites"
+        class="block p-2 rounded-md <%= currentPage === 'favourites' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">Favourites</a>
+      <a href="/host/add-home"
+        class="block p-2 rounded-md <%= currentPage === 'addHome' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">Add
+        Home</a>
+      <a href="/host/home-list"
+        class="block p-2 rounded-md <%= currentPage === 'host-homes' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">Host
+        Home</a>
+      <form action="/logout" class="block p-2 rounded-md text-gray-700 hover:bg-gray-100 %>" method="post">
+        <button type="submit">Log Out</button>
+      </form>
+      <% }else{ %>
+        <a href="/login"
+          class="block p-2 rounded-md <%= currentPage === 'login' ? 'bg-pink-100 text-pink-600 font-semibold' : 'text-gray-700 hover:bg-gray-100' %>">LogIn</a>
+        <% } %>
   </div>
 
+
+  <!-- //some script for this nav bar  -->
   <script>
     document.getElementById('menu-toggle').addEventListener('click', function () {
       document.getElementById('mobile-menu').classList.toggle('hidden');

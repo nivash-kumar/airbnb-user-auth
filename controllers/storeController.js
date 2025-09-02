@@ -3,11 +3,18 @@ const Favourite = require("../models/favourite");
 
 exports.getIndex = (req, res, next) => {
   Home.find().then((registeredHomes) => {
+    console.log("=== StoreController Debug ===");
+    console.log("Full Session Object:", JSON.stringify(req.session, null, 2));
+    console.log("req.session.isLoggedIn:", req.session.isLoggedIn);
+    console.log("req.isLoggedIn:", req.isLoggedIn);
+    console.log("Session ID:", req.sessionID);
+    console.log("===========================");
+    
     res.render("store/index", {
       registeredHomes: registeredHomes,
       pageTitle: "airbnb Home",
       currentPage: "index",
-      isLoggedIn:req.isLoggedIn,
+      isLoggedIn: req.isLoggedIn,
     });
   });
 };
@@ -93,7 +100,7 @@ exports.postAddToFavourite = (req, res, next) => {
           console.log("Fav Added! :", result);
         });
       }
-      res.redirect("/favoutite");
+      res.redirect("/favourites");
     })
     .catch((err) => {
       console.log("Error while marking favourite:", err);
