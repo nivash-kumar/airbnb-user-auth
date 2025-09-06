@@ -6,7 +6,7 @@ exports.getAddHome = (req, res, next) => {
     currentPage: "addHome",
     editing: false,
     isLoggedIn: req.isLoggedIn,
-    User:req.session.user,
+    user: req.session.user,
   });
 };
 
