@@ -1,29 +1,96 @@
 <%- include('partials/head') %>
 </head>
-<body class="bg-gray-50 min-h-screen flex flex-col">
+<body class="bg-gradient-to-br from-gray-50 via-pink-50 to-rose-50 min-h-screen flex flex-col">
+  <main class="flex-1 flex flex-col items-center justify-center px-4 text-center pt-15 relative">
+    <!-- Background decoration -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute -top-40 -right-40 w-80 h-80 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+      <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-rose-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+      <div class="absolute top-40 left-40 w-80 h-80 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+    </div>
 
-  <%- include('partials/nav') %>
+    <div class="relative z-10">
+      <!-- 404 Illustration -->
+      <div class="w-48 h-48 bg-gradient-to-br from-pink-200 to-rose-200 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl animate-bounce">
+        <svg class="w-24 h-24 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.47-.881-6.08-2.33M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+      </div>
 
-  <section class="main h-screen flex flex-col items-center justify-center align-middle">
-    <main class="flex flex-col items-center justify-center flex-1 px-4 text-center mt-48">
+      <!-- Error Number -->
+      <h1 class="text-8xl font-black bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent mb-4 animate-pulse">
+        404
+      </h1>
 
-    <img src="https://cdn-icons-png.flaticon.com/512/580/580185.png" 
-         alt="404 Illustration" 
-         class="w-40 mb-6 animate-bounce">
+      <!-- Error Message -->
+      <h2 class="text-3xl font-bold text-gray-800 mb-4">
+        Page Not Found
+      </h2>
+      
+      <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+        Oops! The page you're looking for doesn't exist.<br>
+        It may have been moved, deleted, or you entered the wrong URL.
+      </p>
 
-    <h2 class="text-7xl font-extrabold text-pink-600 mb-2">404</h2>
-    <p class="text-xl text-gray-600 mb-6">
-      Oops! The page you're looking for doesn’t exist.<br>
-      It may have been moved or deleted.
-    </p>
-    <a href="/"
-       class="inline-block bg-pink-600 hover:bg-pink-700 text-white py-3 px-6 rounded-lg font-semibold shadow-lg transition">
-      ⬅ Go Back Home
-    </a>
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <a href="/"
+           class="bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white py-4 px-8 rounded-2xl font-semibold text-lg shadow-xl hover:shadow-2xl transition-all duration-200 transform hover:-translate-y-1 flex items-center space-x-3">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+          </svg>
+          <span>Go Back Home</span>
+        </a>
+        
+        <button onclick="history.back()"
+                class="bg-white border-2 border-pink-300 text-pink-600 hover:bg-pink-50 py-4 px-8 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1 flex items-center space-x-3">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+          </svg>
+          <span>Go Back</span>
+        </button>
+      </div>
+
+      <!-- Helpful Links -->
+      <div class="mt-12">
+        <p class="text-gray-500 mb-4">Or try these helpful links:</p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="/homes" class="text-pink-600 hover:text-pink-700 font-medium hover:underline transition-colors duration-200">
+            Explore Homes
+          </a>
+          <a href="/host/add-home" class="text-pink-600 hover:text-pink-700 font-medium hover:underline transition-colors duration-200">
+            List Your Home
+          </a>
+          <a href="/about" class="text-pink-600 hover:text-pink-700 font-medium hover:underline transition-colors duration-200">
+            About Us
+          </a>
+          <a href="/contact" class="text-pink-600 hover:text-pink-700 font-medium hover:underline transition-colors duration-200">
+            Contact Support
+          </a>
+        </div>
+      </div>
+    </div>
   </main>
-  </section>
-
+  
+  <style>
+    @keyframes blob {
+      0% { transform: translate(0px, 0px) scale(1); }
+      33% { transform: translate(30px, -50px) scale(1.1); }
+      66% { transform: translate(-20px, 20px) scale(0.9); }
+      100% { transform: translate(0px, 0px) scale(1); }
+    }
+    
+    .animate-blob {
+      animation: blob 7s infinite;
+    }
+    
+    .animation-delay-2000 {
+      animation-delay: 2s;
+    }
+    
+    .animation-delay-4000 {
+      animation-delay: 4s;
+    }
+  </style>
 </body>
-
-<%- include('partials/footer') %>
 </html>

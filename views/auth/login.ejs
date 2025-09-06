@@ -1,56 +1,200 @@
 <%- include('../partials/head') %>
 </head>
-<body class="bg-gray-50 min-h-screen">
-  <%- include('../partials/nav') %>
-  <main class="flex flex-col justify-center items-center min-h-[75vh] px-2 py-10">
-    <form action="/login" method="POST" class="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl mt-8">
-      <h2 class="text-3xl font-bold text-center text-pink-600 mb-6 tracking-tight">Welcome Back</h2>
-      
-      <% if (typeof error !== 'undefined') { %>
-        <div class="mb-4 flex items-center bg-pink-100 border border-pink-200 text-pink-800 px-4 py-2 rounded">
-          <svg class="w-5 h-5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M18.364 5.636l-12.728 12.728M5.636 5.636l12.728 12.728"/>
+<body class="bg-gradient-to-br from-gray-50 via-pink-50 to-rose-50 min-h-screen">
+  <header class="sticky top-0 z-50 shadow-md">
+    <%- include('../partials/nav') %>
+  </header>
+  
+  <main class="flex flex-col justify-center items-center min-h-[75vh] px-4 py-10 mt-20">
+    <!-- Background decoration -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute -top-40 -right-40 w-80 h-80 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+      <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-rose-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+      <div class="absolute top-40 left-40 w-80 h-80 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+    </div>
+
+    <div class="relative z-10 w-full max-w-md">
+      <!-- Header Section -->
+      <div class="text-center mb-8">
+        <div class="w-16 h-16 bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
           </svg>
-          <span><%= error %></span>
         </div>
-      <% } %> 
-
-      <div class="mb-4">
-        <label for="email" class="block text-sm font-semibold text-gray-700 mb-1">Email</label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="example@mail.com"
-          required
-          class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 transition shadow"
-          value="<%= typeof email !== 'undefined' ? email : '' %>"
-        />
+        <h2 class="text-3xl font-bold bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent mb-2">Welcome Back</h2>
+        <p class="text-gray-600">Sign in to your account to continue</p>
       </div>
 
-      <div class="mb-6">
-        <label for="password" class="block text-sm font-semibold text-gray-700 mb-1">Password</label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          placeholder="********"
-          required
-          class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 transition shadow"
-        />
-      </div>
+      <!-- Main Form -->
+      <form action="/login" method="POST" class="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-2xl border border-white/20">
+         <%-include('../partials/errors')%>
+        <!-- Email Field -->
+        <div class="mb-5">
+          <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
+              </svg>
+            </div>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Enter your email"
+              required
+              class="w-full pl-10 pr-4 py-3.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-200 shadow-sm hover:shadow-md"
+              value="<%= oldInput.email ? oldInput.email : "" %>"
+            />
+          </div>
+        </div>
 
-      <button type="submit"
-        class="w-full bg-pink-600 hover:bg-pink-700 text-white py-3 rounded-lg font-semibold text-lg transition shadow">
-        Log in
-      </button>
+        <!-- Password Field -->
+        <div class="mb-6">
+          <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+              </svg>
+            </div>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Enter your password"
+              required
+              class="w-full pl-10 pr-4 py-3.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-200 shadow-sm hover:shadow-md"
+            />
+            <button type="button" id="togglePassword" class="absolute inset-y-0 right-0 pr-3 flex items-center">
+              <svg class="h-5 w-5 text-gray-400 hover:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
 
-      <p class="mt-6 text-sm text-center text-gray-600">
-        Don't have an account?
-        <a href="/signup" class="text-pink-600 font-semibold hover:underline">Sign Up</a>
-      </p>
-    </form>
+        <!-- Remember Me & Forgot Password -->
+        <div class="flex items-center justify-between mb-6">
+          <label class="flex items-center">
+            <input type="checkbox" class="w-4 h-4 text-pink-600 bg-gray-100 border-gray-300 rounded focus:ring-pink-500 focus:ring-2">
+            <span class="ml-2 text-sm text-gray-600">Remember me</span>
+          </label>
+          <a href="/forgot-password" class="text-sm text-pink-600 hover:text-pink-700 font-medium hover:underline">Forgot password?</a>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit"
+          class="w-full bg-gradient-to-r from-pink-600 to-rose-600 text-white py-3.5 rounded-xl font-semibold text-lg transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2">
+          <span class="flex items-center justify-center space-x-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+            </svg>
+            <span>Sign In</span>
+          </span>
+        </button>
+
+        <!-- Sign Up Link -->
+        <p class="mt-6 text-center text-gray-600">
+          Don't have an account?
+          <a href="/signup" class="text-pink-600 font-semibold hover:text-pink-700 hover:underline transition-colors duration-200">Create one now</a>
+        </p>
+      </form>
+    </div>
   </main>
+
+  <!-- Enhanced JavaScript -->
+  <script>
+    // Password visibility toggle
+    const togglePassword = document.getElementById('togglePassword');
+    const password = document.getElementById('password');
+    
+    togglePassword.addEventListener('click', function() {
+      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+      password.setAttribute('type', type);
+      
+      // Update icon
+      const icon = this.querySelector('svg');
+      if (type === 'text') {
+        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"/>';
+      } else {
+        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>';
+      }
+    });
+
+    // Form validation and enhancement
+    const form = document.querySelector('form');
+    const inputs = form.querySelectorAll('input[required]');
+    
+    inputs.forEach(input => {
+      input.addEventListener('blur', function() {
+        if (this.value.trim() === '') {
+          this.classList.add('border-red-300', 'focus:ring-red-500');
+        } else {
+          this.classList.remove('border-red-300', 'focus:ring-red-500');
+        }
+      });
+      
+      input.addEventListener('input', function() {
+        if (this.value.trim() !== '') {
+          this.classList.remove('border-red-300', 'focus:ring-red-500');
+        }
+      });
+    });
+
+    // Form submission enhancement
+    form.addEventListener('submit', function(e) {
+      let isValid = true;
+      
+      inputs.forEach(input => {
+        if (input.value.trim() === '') {
+          input.classList.add('border-red-300', 'focus:ring-red-500');
+          isValid = false;
+        }
+      });
+      
+      if (!isValid) {
+        e.preventDefault();
+        // Show error message
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'mb-4 flex items-center bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl';
+        errorDiv.innerHTML = `
+          <svg class="w-5 h-5 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span>Please fill in all required fields</span>
+        `;
+        
+        const existingError = form.querySelector('.bg-red-50');
+        if (existingError) {
+          existingError.remove();
+        }
+        
+        form.insertBefore(errorDiv, form.firstChild);
+      }
+    });
+  </script>
+
+  <style>
+    @keyframes blob {
+      0% { transform: translate(0px, 0px) scale(1); }
+      33% { transform: translate(30px, -50px) scale(1.1); }
+      66% { transform: translate(-20px, 20px) scale(0.9); }
+      100% { transform: translate(0px, 0px) scale(1); }
+    }
+    
+    .animate-blob {
+      animation: blob 7s infinite;
+    }
+    
+    .animation-delay-2000 {
+      animation-delay: 2s;
+    }
+    
+    .animation-delay-4000 {
+      animation-delay: 4s;
+    }
+  </style>
 </body>
 </html>

@@ -2,77 +2,242 @@
 
     </head>
 
-    <body class="bg-gray-50 min-h-screen">
-        <%- include('../partials/nav') %>
+    <body class="bg-gradient-to-br from-gray-50 via-pink-50 to-rose-50 min-h-screen">
+        <header class="sticky top-0 z-50 shadow-md">
+            <%-include("../partials/nav");%>
+        </header>
 
-            <main class="container mx-auto px-4 py-10 mt-10">
+        <main class="container mx-auto px-4 py-10 mt-20">
+            <!-- Background decoration -->
+            <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                <div class="absolute -top-40 -right-40 w-80 h-80 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+                <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-rose-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+            </div>
 
+            <div class="relative z-10">
                 <!-- Home Title -->
-                <h1 class="text-3xl sm:text-4xl font-bold text-pink-600 mb-6 text-center">
-                    Details of <%= home.houseName %>
-                </h1>
-
-                <!-- Location & Rating -->
-                <div class="flex flex-wrap items-center gap-4 mb-6">
-                    <span class="text-gray-700 text-lg">📍 <%=  home.city %></span>
-                    <span class="bg-yellow-300 text-gray-900 px-3 py-1 rounded-full font-semibold">
-                        ⭐ <%= home.rating %>
-                    </span>
-                    <span class="bg-pink-100 text-pink-700 px-3 py-1 rounded-full font-semibold">
-                        ₹<%= home.price %>/night
-                    </span>
+                <div class="text-center mb-8">
+                    <h1 class="text-4xl font-bold bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent mb-4">
+                        <%= home.houseName %>
+                    </h1>
+                    
+                    <!-- Location & Rating -->
+                    <div class="flex flex-wrap items-center justify-center gap-4 mb-6">
+                        <div class="flex items-center space-x-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg">
+                            <svg class="w-5 h-5 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <span class="text-gray-700 font-semibold"><%= home.city %></span>
+                        </div>
+                        
+                        <div class="flex items-center space-x-2 bg-yellow-100 px-4 py-2 rounded-full shadow-lg">
+                            <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
+                            </svg>
+                            <span class="text-gray-900 font-semibold"><%= home.rating %></span>
+                        </div>
+                        
+                        <div class="bg-gradient-to-r from-pink-500 to-rose-600 text-white px-4 py-2 rounded-full shadow-lg">
+                            <span class="font-bold text-lg">₹<%= home.price %></span>
+                            <span class="text-sm opacity-90">/night</span>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Image (Main) -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                    <div class="md:col-span-2">
-                        <img src="<%= home.photoUrl %>" alt="<%= home.houseName %>"
-                            class=" h-[400px] object-cover rounded-lg shadow-lg" />
+                <!-- Image Gallery -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                    <!-- Main Image -->
+                    <div class="lg:col-span-2">
+                        <div class="relative overflow-hidden rounded-3xl shadow-2xl">
+                            <img src="<%= home.photoUrl %>" alt="<%= home.houseName %>"
+                                class="w-full h-[500px] object-cover hover:scale-105 transition-transform duration-700">
+                            
+                            <!-- Image Overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                        </div>
                     </div>
 
-                    <!-- Optional More Images -->
-                    <% if (home.moreImages && home.moreImages.length> 0) { %>
-                        <% home.moreImages.forEach(img=> { %>
-                            <img src="<%= img %>" alt="Home Image"
-                                class="w-full h-48 object-cover rounded-lg shadow-md" />
+                    <!-- Side Images -->
+                    <div class="space-y-4">
+                        <% if (home.moreImages && home.moreImages.length > 0) { %>
+                            <% home.moreImages.slice(0, 2).forEach((img, index) => { %>
+                                <div class="relative overflow-hidden rounded-2xl shadow-lg">
+                                    <img src="<%= img %>" alt="Home Image <%= index + 1 %>"
+                                        class="w-full h-[240px] object-cover hover:scale-105 transition-transform duration-500">
+                                </div>
                             <% }) %>
-                                <% } %>
+                        <% } else { %>
+                            <!-- Placeholder images -->
+                            <div class="bg-gray-200 rounded-2xl h-[240px] flex items-center justify-center">
+                                <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                            <div class="bg-gray-200 rounded-2xl h-[240px] flex items-center justify-center">
+                                <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                        <% } %>
+                    </div>
                 </div>
 
-                <!-- Details Section -->
-                <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
-                    <h2 class="text-2xl font-semibold mb-4">🏠 Property Details</h2>
-                    <p class="text-gray-700 mb-2"><strong>Owner:</strong>
-                        <%= home.ownerName %>
-                    </p>
-                    <p class="text-gray-700 mb-2"><strong>Contact:</strong>
-                        <%= home.contactNumber %>
-                    </p>
-                    <p class="text-gray-700 mb-2"><strong>Full Address:</strong>
-                        <%= home.address %>
-                    </p>
-                    <p class="text-gray-700 mb-2"><strong>Price per night:</strong> ₹<%= home.price %>
-                    </p>
-                    <p class="text-gray-700"><strong>Description:</strong>
-                        This home is exist in the best home's list in the world.
-                        <%= // home.description || "No description provided for this listing." %>
-                    </p>
+                <!-- Main Content Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Left Column - Property Details -->
+                    <div class="lg:col-span-2">
+                        <!-- Property Details Card -->
+                        <div class="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-white/20 p-8 mb-6">
+                            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                    </svg>
+                                </div>
+                                <span>Property Details</span>
+                            </h2>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="space-y-4">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 bg-pink-100 rounded-lg flex items-center justify-center">
+                                            <svg class="w-5 h-5 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500">Owner</p>
+                                            <p class="font-semibold text-gray-900"><%= home.ownerName %></p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500">Contact</p>
+                                            <p class="font-semibold text-gray-900"><%= home.contactNumber %></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="space-y-4">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500">Location</p>
+                                            <p class="font-semibold text-gray-900"><%= home.city %></p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                                            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="text-sm text-gray-500">Price</p>
+                                            <p class="font-semibold text-gray-900">₹<%= home.price %>/night</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Full Address -->
+                            <div class="mt-6 pt-6 border-t border-gray-200">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm text-gray-500">Full Address</p>
+                                        <p class="font-semibold text-gray-900"><%= home.address %></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Description Card -->
+                        <div class="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-white/20 p-8">
+                            <h3 class="text-xl font-bold text-gray-900 mb-4">About this place</h3>
+                            <p class="text-gray-700 leading-relaxed">
+                                <%= home.description || "This beautiful home offers a perfect blend of comfort and luxury. Located in a prime area, it provides easy access to local attractions while maintaining privacy and tranquility. The property features modern amenities and thoughtful design to ensure a memorable stay for all guests." %>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Right Column - Booking Card -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-white/20 p-6 sticky top-24">
+                            <h3 class="text-xl font-bold text-gray-900 mb-4">Book this home</h3>
+                            
+                            <!-- Price Display -->
+                            <div class="mb-6">
+                                <div class="flex items-baseline space-x-2">
+                                    <span class="text-3xl font-bold text-gray-900">₹<%= home.price %></span>
+                                    <span class="text-gray-600">per night</span>
+                                </div>
+                                <p class="text-sm text-gray-500 mt-1">+ taxes and fees</p>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="space-y-4">
+                                <%- include('../partials/favourite') %>
+                                
+                                <a href="/book/<%= home._id %>"
+                                    class="w-full bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white py-4 px-6 rounded-2xl font-semibold text-lg shadow-xl transition-all duration-200 transform hover:-translate-y-1 hover:shadow-2xl text-center block">
+                                    <span class="flex items-center justify-center space-x-3">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                        </svg>
+                                        <span>Book Now</span>
+                                    </span>
+                                </a>
+                            </div>
+
+                            <!-- Additional Info -->
+                            <div class="mt-6 pt-6 border-t border-gray-200">
+                                <div class="flex items-center justify-between text-sm text-gray-600">
+                                    <span>⭐ <%= home.rating %> rating</span>
+                                    <span>📍 <%= home.city %></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </main>
 
-                <!-- Book Now Button -->
-                <div
-                    class="flex justify-around sm:flex-nowrap flex-wrap gap-2 bg-white rounded-full shadow-lg p-4 mb-8 ">
+        <%- include('../partials/footer') %>
 
-                    <%- include('../partials/favourite') %>
-
-                        <a href="/book/<%= home._id %>"
-                            class="w-auto bg-pink-600 hover:bg-pink-700 text-white px-8 py-2 rounded-lg font-semibold shadow-lg transition  hover:scale-110 text-center">
-                            Book Now
-                        </a>
-                </div>
-
-            </main>
+        <style>
+            @keyframes blob {
+                0% { transform: translate(0px, 0px) scale(1); }
+                33% { transform: translate(30px, -50px) scale(1.1); }
+                66% { transform: translate(-20px, 20px) scale(0.9); }
+                100% { transform: translate(0px, 0px) scale(1); }
+            }
+            
+            .animate-blob {
+                animation: blob 7s infinite;
+            }
+            
+            .animation-delay-2000 {
+                animation-delay: 2s;
+            }
+        </style>
     </body>
-    
-    <%- include('../partials/footer') %>
 </html>
