@@ -17,16 +17,12 @@ const userSchema = mongoose.Schema({
         type: String,
         enum: ['guest', 'host'],
         default: 'guest'
-    }
-})
+    },
+    favourites: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Home'
+    }],
+});
 
-// const user = {
-//     userName,
-//     email,
-//     password,
-//     confirmPassword,
-//     userType,
-//     termsAndConditions,
-// }
 
 module.exports = mongoose.model('User', userSchema);
