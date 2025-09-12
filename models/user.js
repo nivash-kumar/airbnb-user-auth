@@ -22,6 +22,10 @@ const userSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Home'
     }],
+    addedHomes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Home'
+    }],
 });
 
 

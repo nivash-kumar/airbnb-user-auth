@@ -36,14 +36,12 @@ exports.postSignup = [
   check("password")
     .isLength({ min: 6 })
     .withMessage("Password shold be atleast 6 characters long")
-    .matches(/[A-Z]/)
-    .withMessage("Password should be at least one uppercase")
-    .matches(/[a-z]/)
-    .withMessage("Password shold be atleast one Small character")
+    .matches(/[a-zA-Z]/)
+    .withMessage("Password shold be atleast one character")
     .matches(/[0-9]/)
     .withMessage("Password should be atleast one number")
-    .matches(/[!@#$%^&*()_+{}\[\]:;<>,.?]/)
-    .withMessage("Password should be atleast one special character")
+    // .matches(/[!@#$%^&*()_+{}\[\]:;<>,.?]/)
+    // .withMessage("Password should be atleast one special character")
     .trim(),
 
   check("confirmPassword")

@@ -1,4 +1,5 @@
 const Home = require("../models/home");
+const User = require("../models/user");
 
 exports.getAddHome = (req, res, next) => {
   res.render("host/edit-home", {
