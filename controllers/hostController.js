@@ -1,5 +1,6 @@
 const Home = require("../models/home");
 const User = require("../models/user");
+const fs = require("fs");
 
 exports.getAddHome = (req, res, next) => {
   res.render("host/edit-home", {
@@ -12,7 +13,13 @@ exports.getAddHome = (req, res, next) => {
 };
 
 exports.postAddHome = (req, res, next) => {
-  // console.log(`Home registration successful for: `, req.body, req.body.houseName);
+  console.log("photo", req.body);
+  console.log("file is:", req.file);
+
+  if(!req.file){
+    console.log("No file uploaded in image format");
+    return res.status(422).send("No file uploaded in image format");
+  }
   const {
     houseName,
     ownerName,
@@ -20,10 +27,10 @@ exports.postAddHome = (req, res, next) => {
     city,
     address,
     rating,
-    photoUrl,
     contactNumber,
     description,
   } = req.body;
+  const photo = req.file.path;
   // registeredHomes.push(req.body);
   const home = new Home({
     houseName,
@@ -32,9 +39,9 @@ exports.postAddHome = (req, res, next) => {
     city,
     address,
     rating,
-    photoUrl,
     contactNumber,
     description,
+    photo,
   });
   home.save().then(() => {
     console.log("Home Registered Successfully");
@@ -86,11 +93,9 @@ exports.postEditHome = (req, res, next) => {
     city,
     address,
     rating,
-    photoUrl,
     contactNumber,
     description,
   } = req.body;
-
   Home.findById(id)
     .then((home) => {
       home.houseName = houseName;
@@ -99,9 +104,16 @@ exports.postEditHome = (req, res, next) => {
       home.city = city;
       home.address = address;
       home.rating = rating;
-      home.photoUrl = photoUrl;
       home.contactNumber = contactNumber;
       home.description = description;
+
+      if(req.file){
+        fs.unlink(home.photo, (err) =>{
+          console.log("ERROR WHILE UPDTE IMAGE FILE", err);
+        });
+        home.photo = req.file.path;
+      }
+
       home
         .save()
         .then((result) => {
@@ -119,6 +131,7 @@ exports.postEditHome = (req, res, next) => {
 
 exports.postDeleteHome = (req, res, next) => {
   const homeId = req.params.homeId;
+  
   Home.findByIdAndDelete(homeId)
     .then(() => {
       res.redirect("/host/home-list");

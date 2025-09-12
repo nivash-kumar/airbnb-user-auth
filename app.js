@@ -6,6 +6,8 @@ const express = require("express");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const DB_PATH ="mongodb+srv://SinghKN:singhknwork@singhkn.v0hajwv.mongodb.net/airbnb?retryWrites=true&w=majority&appName=singhKn";
+const { default: mongoose } = require("mongoose");
+const multer = require("multer");
 
 //Local Module....
 const storeRouter = require("./routes/storeRouter");
@@ -13,7 +15,6 @@ const hostRouter = require("./routes/hostRouter");
 const authRouter = require("./routes/authRouter");
 const rootDir = require("./utils/pathUtil");
 const errorController = require("./controllers/errorController");
-const { default: mongoose } = require("mongoose");
 
 const app = express();
 
@@ -26,8 +27,43 @@ const store = new MongoDBStore({
 
 });
 
+const randomString = (length) => {
+  const characters = 'abcdefghijklmnopqrstuvwxyz';
+  let result = '';
+  for (let i = 0; i< length; i++){
+    result += characters.charAt(Math.floor(Math.random()* characters.length));
+  }
+  return result;
+}
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    // cb(null, new Date().toISOString() + "-" + file.originalname);
+    cb(null, randomString(10) + "-" + file.originalname);
+  }
+});
+const fileFilter = (req, file, cd) => {
+  if (file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg"){
+    cd(null, true);
+  }else{
+    cd(null, false);
+  }
+}
+const multerOption = {
+  storage, fileFilter
+}
+
 
 app.use(express.urlencoded());
+app.use(express.static(path.join(rootDir, "public")));
+app.use(multer(multerOption).single("photo"));
+app.use("/uploads", express.static(path.join(rootDir, "uploads")));
+app.use("/host/uploads", express.static(path.join(rootDir, "uploads")));
+app.use("/homes/uploads", express.static(path.join(rootDir, "uploads")));
+
 app.use(session({
   secret: "This page is dedicated to SinghKN",
   resave: false,
@@ -46,7 +82,6 @@ app.use((req, res, next) => {
 });
 
 //// Uses our routers
-app.use(express.static(path.join(rootDir, "public")));
 app.use(authRouter);
 app.use(storeRouter);
 app.use("/host", hostRouter);

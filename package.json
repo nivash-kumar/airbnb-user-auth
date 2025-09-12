@@ -23,6 +23,7 @@
     "express-session": "^1.18.2",
     "express-validator": "^7.2.1",
     "mongoose": "^8.18.0",
+    "multer": "^2.0.2",
     "postcss": "^8.5.6"
   }
 }
