@@ -289,7 +289,7 @@
 
             <script>
                 // Check if user is logged in
-                const isLoggedIn = user && user._id ? 'true' : 'false' ;
+                const isLoggedIn = <%= user && user._id ? 'true' : 'false' %>;
                 const pdfPath = '<%= home.rulesPdf || "" %>';
 
                 function openRulesPdf() {

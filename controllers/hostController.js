@@ -198,26 +198,58 @@ exports.postEditHome = (req, res, next) => {
 
 exports.postDeleteHome = (req, res, next) => {
   const homeId = req.params.homeId;
-  // Home.findByIdAndDelete(homeId)
-  //   .then(() => {
-  //     res.redirect("/host/home-list");
-  //   })
-  //   .catch((err) => {
-  //     console.log("Error while deleting home:", err);
-  //     res.redirect("/host/home-list");
-  //   });
+  
   Home.findById(homeId)
     .then((home) => {
-      console.log(home);
-      fs.unlink(home.photo, (err) => {
-        if (err) console.log("Error deleting photo:", err);
+      if (!home) {
+        console.log("Home not found");
+        return res.redirect("/host/home-list");
+      }
+      
+      console.log("Deleting home:", home.houseName);
+      
+      // Delete files asynchronously and wait for completion
+      const deletePromises = [];
+      
+      // Delete photo file if it exists
+      if (home.photo && home.photo.trim() !== '') {
+        deletePromises.push(
+          new Promise((resolve) => {
+            fs.unlink(home.photo, (err) => {
+              if (err) {
+                console.log("Error deleting photo:", err.message);
+              } else {
+                console.log("Photo deleted successfully:", home.photo);
+              }
+              resolve(); // Always resolve, even if file deletion fails
+            });
+          })
+        );
+      }
+      
+      // Delete PDF file if it exists
+      if (home.rulesPdf && home.rulesPdf.trim() !== '') {
+        deletePromises.push(
+          new Promise((resolve) => {
+            fs.unlink(home.rulesPdf, (err) => {
+              if (err) {
+                console.log("Error deleting PDF:", err.message);
+              } else {
+                console.log("PDF deleted successfully:", home.rulesPdf);
+              }
+              resolve(); // Always resolve, even if file deletion fails
+            });
+          })
+        );
+      }
+      
+      // Wait for all file deletions to complete, then delete the home record
+      return Promise.all(deletePromises).then(() => {
+        return home.deleteOne();
       });
-      fs.unlink(home.rulesPdf, (err) => {
-        if (err) console.log("Error deleting PDF:", err);
-      });
-      return home.delete();
     })
     .then(() => {
+      console.log("Home deleted successfully");
       res.redirect("/host/home-list");
     })
     .catch((err) => {
