@@ -20,14 +20,15 @@ const homeSchema = mongoose.Schema({
         required: true,
     },
     photo: String,
-    contactNumber:Number,
+    rulesPdf: String,
+    // contactNumber:Number,
     description: String,
 });
 
-// homeSchema.pre("findOneAndDelete",async function(next) {
-//     const homeId = this.getQuery()._id;
-//     await Favourite.deleteMany({homeId: homeId});
-//     next();
-// });
+homeSchema.pre("findOneAndDelete",async function(next) {
+    const homeId = this.getQuery()._id;
+    await Favourite.deleteMany({homeId: homeId});
+    next();
+});
 
 module.exports = mongoose.model("Home", homeSchema);

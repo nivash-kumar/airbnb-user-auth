@@ -9,69 +9,202 @@
         <main class="container mx-auto px-4 py-10 mt-20">
 
             <div class="relative z-10">
-                <h2 class="text-4xl font-bold bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent text-center mb-12">
-                    ❤️ Your Favourite Homes
-                </h2>
+                <!-- Header Section -->
+                <div class="text-center mb-12">
+                    <div
+                        class="w-20 h-20 bg-gradient-to-br from-pink-500 to-rose-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl">
+                        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                    </div>
+                    <h1
+                        class="text-4xl font-bold bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent mb-4">
+                        ❤️ Your Favourite Homes
+                    </h1>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                        Discover and manage your saved properties. These are the homes that caught your eye!
+                    </p>
+                </div>
 
-                <!-- Responsive Grid -->
-                <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-10 gap-y-14">
-                    <% favouriteHomes.forEach(home => { %>
-                        <li class="group relative">
-                            <div class="bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl overflow-hidden hover:shadow-pink-200 transition-all duration-300">
-                                <!-- Image Section -->
-                                <div class="relative w-full h-64 overflow-hidden">
-                                    <img src="<%= home.photo %>" alt="<%= home.houseName %>"
-                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                                    <!-- Active Favourite Heart -->
-                                    <button type="button" onclick="event.preventDefault()"
-                                        class="absolute top-4 right-4 bg-white rounded-full p-2 shadow hover:scale-110 transition">
-                                        <span class="text-pink-600 text-2xl">❤️</span>
-                                    </button>
-                                    <!-- Rating Badge -->
-                                    <div class="absolute top-4 left-4 bg-white/90 px-4 py-2 rounded-full text-gray-900 font-semibold shadow">
-                                        ⭐ <%= home.rating %>
-                                    </div>
-                                    <!-- Book Now Overlay -->
-                                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                        <a href="/homes/<%= home._id %>"
-                                            class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg transition text-lg">
-                                            View Details
-                                        </a>
-                                    </div>
-                                </div>
-                                <!-- Info Section -->
-                                <div class="p-6">
-                                    <div class="flex justify-between items-start flex-wrap">
-                                        <div>
-                                            <h3 class="text-xl font-bold text-gray-900 truncate mb-1">
-                                                <%= home.houseName %>
-                                            </h3>
-                                            <p class="text-sm text-gray-500 mb-1">
-                                                <%= home.city %>
-                                            </p>
-                                            <p class="text-sm text-gray-600 line-clamp-2">
-                                                <%= home.address %>
-                                            </p>
+                <% if (favouriteHomes && favouriteHomes.length > 0) { %>
+                    <!-- Responsive Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <% favouriteHomes.forEach(home => { %>
+                            <div class="group bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-white/20 overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                                <!-- Clickable Card -->
+                                <a href="/homes/<%= home._id %>" class="block">
+                                    <!-- Image Section -->
+                                    <div class="relative w-full h-64 overflow-hidden">
+                                        <img src="<%= home.photo %>" alt="<%= home.houseName %>"
+                                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+
+                                        <!-- Active Favourite Heart -->
+                                        <button type="button" onclick="event.preventDefault()"
+                                            class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-lg hover:scale-110 transition z-10">
+                                            <span class="text-pink-600 text-xl">❤️</span>
+                                        </button>
+
+                                        <!-- Rating Badge -->
+                                        <div
+                                            class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-2 rounded-full shadow-lg">
+                                            <span class="flex items-center space-x-1 text-gray-900 font-semibold">
+                                                <svg class="w-4 h-4 text-yellow-400" fill="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path
+                                                        d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                                                </svg>
+                                                <span><%= home.rating %></span>
+                                            </span>
                                         </div>
-                                        <div class="text-right">
-                                            <span class="text-xl font-semibold text-pink-700">₹<%= home.price %></span>
-                                            <span class="text-sm text-gray-500">/night</span>
-                                            <form action="/favourites/delete/<%= home._id %>" method="post"
-                                                class="mt-4">
-                                                <button type="submit"
-                                                    class="w-full bg-gradient-to-r from-pink-600 to-rose-600 text-white px-4 py-2 rounded-lg font-semibold shadow hover:shadow-xl transition">
-                                                    Remove
-                                                </button>
-                                            </form>
+
+                                        <!-- Price Badge -->
+                                        <div
+                                            class="absolute bottom-4 right-4 bg-gradient-to-r from-pink-600 to-rose-600 text-white px-3 py-2 rounded-full shadow-lg">
+                                            <span class="font-bold">₹<%= home.price %></span>
+                                            <span class="text-sm opacity-90">/night</span>
+                                        </div>
+
+                                        <!-- Hover Overlay -->
+                                        <div
+                                            class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                            <button
+                                                class="bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg transition-all duration-200 transform hover:scale-105">
+                                                <span class="flex items-center space-x-2">
+                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor"
+                                                        viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                    </svg>
+                                                    <span>View Details</span>
+                                                </span>
+                                            </button>
                                         </div>
                                     </div>
+
+                                    <!-- Info Section -->
+                                    <div class="p-6">
+                                        <div class="flex justify-between items-start mb-3">
+                                            <div class="flex-1">
+                                                <h3
+                                                    class="text-lg font-bold text-gray-900 group-hover:text-pink-600 transition-colors duration-200 line-clamp-1">
+                                                    <%= home.houseName %>
+                                                </h3>
+                                                <div class="flex items-center space-x-2 text-gray-600 mt-1">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                        viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    </svg>
+                                                    <span class="font-medium"><%= home.city %></span>
+                                                </div>
+                                                <p class="text-sm text-gray-500 mt-1 line-clamp-2">
+                                                    <%= home.address %>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+
+                                <!-- Action Button -->
+                                <div class="px-6 pb-6 mb-4">
+                                    <form action="/favourites/delete/<%= home._id %>" method="post">
+                                        <button type="submit"
+                                            class="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white py-3 rounded-xl font-semibold transition-all duration-200 transform hover:-translate-y-0.5 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+                                            onclick="return confirm('Are you sure you want to remove this home from your favourites?')">
+                                            <span class="flex items-center justify-center space-x-2">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                </svg>
+                                                <span>Remove from Favourites</span>
+                                            </span>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
-                        </li>
-                    <% }) %>
-                </ul>
+                        <% }) %>
+                    </div>
+                <% } else { %>
+                    <!-- No Favourites Message -->
+                    <div class="text-center py-16">
+                        <div class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-4">No Favourite Homes Yet</h3>
+                        <p class="text-gray-600 mb-8 max-w-md mx-auto">
+                            Start exploring amazing homes and add them to your favourites to see them here!
+                        </p>
+                        <a href="/homes"
+                            class="bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white px-8 py-4 rounded-2xl shadow-xl transition-all duration-200 transform hover:-translate-y-1 hover:shadow-2xl text-lg font-semibold">
+                            <span class="flex items-center space-x-3">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                                <span>Explore Homes</span>
+                            </span>
+                        </a>
+                    </div>
+                <% } %>
             </div>
         </main>
         <%- include('../partials/footer') %>
+
+        <style>
+            @keyframes blob {
+                0% {
+                    transform: translate(0px, 0px) scale(1);
+                }
+
+                33% {
+                    transform: translate(30px, -50px) scale(1.1);
+                }
+
+                66% {
+                    transform: translate(-20px, 20px) scale(0.9);
+                }
+
+                100% {
+                    transform: translate(0px, 0px) scale(1);
+                }
+            }
+
+            .animate-blob {
+                animation: blob 7s infinite;
+            }
+
+            .animation-delay-2000 {
+                animation-delay: 2s;
+            }
+
+            .line-clamp-1 {
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                line-clamp: 1;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+
+            .line-clamp-2 {
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+        </style>
     </body>
 </html>

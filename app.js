@@ -5,9 +5,15 @@ const path = require("path");
 const express = require("express");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
-const DB_PATH ="mongodb+srv://SinghKN:singhknwork@singhkn.v0hajwv.mongodb.net/airbnb?retryWrites=true&w=majority&appName=singhKn";
 const { default: mongoose } = require("mongoose");
 const multer = require("multer");
+
+// Load environment variables
+require('dotenv').config();
+
+const DB_PATH = process.env.MONGODB_URI || "mongodb+srv://SinghKN:singhknwork@singhkn.v0hajwv.mongodb.net/airbnb?retryWrites=true&w=majority&appName=singhKn";
+const SESSION_SECRET = process.env.SESSION_SECRET || "This page is dedicated to SinghKN";
+const PORT = process.env.PORT || 8000;
 
 //Local Module....
 const storeRouter = require("./routes/storeRouter");
@@ -24,57 +30,87 @@ app.set("views", "views");
 const store = new MongoDBStore({
   uri: DB_PATH,
   collection: "sessions",
-
 });
 
 const randomString = (length) => {
-  const characters = 'abcdefghijklmnopqrstuvwxyz';
-  let result = '';
-  for (let i = 0; i< length; i++){
-    result += characters.charAt(Math.floor(Math.random()* characters.length));
+  const characters = "abcdefghijklmnopqrstuvwxyz";
+  let result = "";
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
   }
   return result;
-}
+};
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/");
+    if (
+      file.mimetype === "image/png" ||
+      file.mimetype === "image/jpg" ||
+      file.mimetype === "image/jpeg"
+    ) {
+      cb(null, "uploads/images");
+    } else if (
+      file.mimetype === "application/pdf" ||
+      file.mimetype === "application/docx" ||
+      file.mimetype === "application/txt"
+    ) {
+      cb(null, "uploads/pdfs");
+    } else {
+      cb(null, "uploads/others"); // Fallback for other file types
+    }
   },
   filename: (req, file, cb) => {
     // cb(null, new Date().toISOString() + "-" + file.originalname);
     cb(null, randomString(10) + "-" + file.originalname);
-  }
+  },
 });
-const fileFilter = (req, file, cd) => {
-  if (file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg"){
-    cd(null, true);
-  }else{
-    cd(null, false);
-  }
-}
-const multerOption = {
-  storage, fileFilter
-}
 
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "image/jpeg" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/png"
+  ) {
+    cb(null, true);
+  } else if (
+    file.mimetype === "application/pdf" || // .doc
+    file.mimetype === "application/docx" || // .docx
+    file.mimetype === "text/txt"
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+const multerOption = {
+  storage,
+  fileFilter,
+};
 
 app.use(express.urlencoded());
 app.use(express.static(path.join(rootDir, "public")));
-app.use(multer(multerOption).single("photo"));
+// app.use(multer(multerOption).single("photo"));
+app.use(multer(multerOption).any());
+// app.use(multer(multerOption).array("photo"));
+// app.use(multer(multerOption).array("rulesPdf"));
 app.use("/uploads", express.static(path.join(rootDir, "uploads")));
 app.use("/host/uploads", express.static(path.join(rootDir, "uploads")));
 app.use("/homes/uploads", express.static(path.join(rootDir, "uploads")));
 
-app.use(session({
-  secret: "This page is dedicated to SinghKN",
-  resave: false,
-  saveUninitialized: false,
-  store
-}));
+app.use(
+  session({
+    secret: SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store,
+  })
+);
 
 app.use((req, res, next) => {
   req.isLoggedIn = req.session.isLoggedIn || false;
   next();
-})
+});
 
 app.use((req, res, next) => {
   console.log(req.url, req.method);
@@ -87,13 +123,12 @@ app.use(storeRouter);
 app.use("/host", hostRouter);
 app.use(errorController.pageNotFound);
 
-const port = 8000;
 mongoose
   .connect(DB_PATH)
   .then(() => {
-    console.log("Mongoose Connected successfuly");
-    app.listen(port, () => {
-      console.log(`Server is running on PORT >> http://localhost:${port}`);
+    console.log("Mongoose Connected successfully");
+    app.listen(PORT, () => {
+      console.log(`Server is running on PORT >> http://localhost:${PORT}`);
     });
   })
   .catch((err) => {

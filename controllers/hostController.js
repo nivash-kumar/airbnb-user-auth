@@ -14,11 +14,18 @@ exports.getAddHome = (req, res, next) => {
 
 exports.postAddHome = (req, res, next) => {
   console.log("photo", req.body);
-  console.log("file is:", req.file);
+  console.log("file is:", req.files);
 
-  if(!req.file){
-    console.log("No file uploaded in image format");
-    return res.status(422).send("No file uploaded in image format");
+  if (!req.files || req.files.length === 0) {
+    console.log("No file uploaded in right format ");
+    return res.status(422).render("host/edit-home", {
+      pageTitle: "Add Home to airbnb",
+      currentPage: "addHome",
+      editing: false,
+      isLoggedIn: req.isLoggedIn,
+      user: req.session.user,
+      errors: ["Please upload both image and PDF files"]
+    });
   }
   const {
     houseName,
@@ -27,11 +34,32 @@ exports.postAddHome = (req, res, next) => {
     city,
     address,
     rating,
-    contactNumber,
+    // contactNumber,
     description,
   } = req.body;
-  const photo = req.file.path;
-  // registeredHomes.push(req.body);
+
+  const photo = [];
+  const rulesPdf = [];
+  req.files.forEach((el) => {
+    if (el.fieldname === "photo") {
+      photo.push(el.path);
+      console.log(photo);
+    } else if (el.fieldname === "rulesPdf") {
+      rulesPdf.push(el.path);
+      console.log(rulesPdf);
+    }
+  });
+  if (photo.length === 0 || rulesPdf.length === 0) {  
+    return res.status(422).render("host/edit-home", {
+      pageTitle: "Add Home to airbnb",
+      currentPage: "addHome",
+      editing: false,
+      isLoggedIn: req.isLoggedIn,
+      user: req.session.user,
+      errors: ["Both image and PDF files are required"]
+    });
+  }
+
   const home = new Home({
     houseName,
     ownerName,
@@ -39,14 +67,27 @@ exports.postAddHome = (req, res, next) => {
     city,
     address,
     rating,
-    contactNumber,
+    // contactNumber,
     description,
-    photo,
+    photo: photo[0],
+    rulesPdf: rulesPdf[0],
   });
-  home.save().then(() => {
-    console.log("Home Registered Successfully");
-  });
-  res.redirect("/host/home-list");
+  home.save()
+    .then(() => {
+      console.log("Home Registered Successfully");
+      res.redirect("/host/home-list");
+    })
+    .catch((err) => {
+      console.log("Error saving home:", err);
+      return res.status(500).render("host/edit-home", {
+        pageTitle: "Add Home to airbnb",
+        currentPage: "addHome",
+        editing: false,
+        isLoggedIn: req.isLoggedIn,
+        user: req.session.user,
+        errors: ["Error saving home. Please try again."]
+      });
+    });
 };
 
 exports.getHostHomes = (req, res, next) => {
@@ -84,7 +125,6 @@ exports.getEditHome = (req, res, next) => {
 };
 
 exports.postEditHome = (req, res, next) => {
-  // console.log(`Home registration successful for: `, req.body, req.body.houseName);
   const {
     id,
     houseName,
@@ -93,9 +133,13 @@ exports.postEditHome = (req, res, next) => {
     city,
     address,
     rating,
-    contactNumber,
+    // contactNumber,
     description,
   } = req.body;
+
+  const photo = [];
+  const rulesPdf = [];
+
   Home.findById(id)
     .then((home) => {
       home.houseName = houseName;
@@ -104,14 +148,37 @@ exports.postEditHome = (req, res, next) => {
       home.city = city;
       home.address = address;
       home.rating = rating;
-      home.contactNumber = contactNumber;
+      // home.contactNumber = contactNumber;
       home.description = description;
 
-      if(req.file){
-        fs.unlink(home.photo, (err) =>{
-          console.log("ERROR WHILE UPDTE IMAGE FILE", err);
+      if (req.files) {
+        req.files.forEach(el => {
+          if (el.fieldname === "photo") {
+            // Delete old photo file
+            if (home.photo) {
+              fs.unlink(home.photo, (err) => {
+                if (err) console.log("ERROR WHILE UPDATING IMAGE FILE", err);
+              });
+            }
+            photo.push(el.path);
+          } else if (el.fieldname === "rulesPdf") {
+            // Delete old PDF file
+            if (home.rulesPdf) {
+              fs.unlink(home.rulesPdf, (err) => {
+                if (err) console.log("ERROR WHILE UPDATING PDF FILE", err);
+              });
+            }
+            rulesPdf.push(el.path);
+          }
         });
-        home.photo = req.file.path;
+        
+        // Update file paths only if new files were uploaded
+        if (photo.length > 0) {
+          home.photo = photo[0];
+        }
+        if (rulesPdf.length > 0) {
+          home.rulesPdf = rulesPdf[0];
+        }
       }
 
       home
@@ -131,8 +198,25 @@ exports.postEditHome = (req, res, next) => {
 
 exports.postDeleteHome = (req, res, next) => {
   const homeId = req.params.homeId;
-  
-  Home.findByIdAndDelete(homeId)
+  // Home.findByIdAndDelete(homeId)
+  //   .then(() => {
+  //     res.redirect("/host/home-list");
+  //   })
+  //   .catch((err) => {
+  //     console.log("Error while deleting home:", err);
+  //     res.redirect("/host/home-list");
+  //   });
+  Home.findById(homeId)
+    .then((home) => {
+      console.log(home);
+      fs.unlink(home.photo, (err) => {
+        if (err) console.log("Error deleting photo:", err);
+      });
+      fs.unlink(home.rulesPdf, (err) => {
+        if (err) console.log("Error deleting PDF:", err);
+      });
+      return home.delete();
+    })
     .then(() => {
       res.redirect("/host/home-list");
     })

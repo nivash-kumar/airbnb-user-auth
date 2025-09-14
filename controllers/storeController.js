@@ -40,7 +40,6 @@ exports.getBookings = (req, res, next) => {
 exports.getFavouriteList = async (req, res, next) => {
   const userId = req.session.user._id;
   const user = await User.findById(userId).populate("favourites");
-  console.log(user);
   res.render("store/favourite-list", {
     favouriteHomes: user.favourites,
     pageTitle: "My Favourites",
@@ -68,6 +67,7 @@ exports.getHomeDetails = (req, res, next) => {
       console.log("Home not found");
       res.redirect("/homes");
     } else {
+      console.log("home ===", home);
       res.render("store/home-detail", {
         home: home,
         pageTitle: "Home Detail",
@@ -78,6 +78,7 @@ exports.getHomeDetails = (req, res, next) => {
     }
   });
 };
+// This function is redundant - using postAddFavourite instead
 exports.postAddToFavourite = (req, res, next) => {
   const homeId = req.body.id;
   Favourite.findOne({ homeId: homeId })
