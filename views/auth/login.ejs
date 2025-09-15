@@ -97,9 +97,7 @@
     </div>
   </main>
 
-  <!-- Enhanced JavaScript -->
   <script>
-    // Password visibility toggle
     const togglePassword = document.getElementById('togglePassword');
     const password = document.getElementById('password');
     
@@ -107,7 +105,6 @@
       const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
       password.setAttribute('type', type);
       
-      // Update icon
       const icon = this.querySelector('svg');
       if (type === 'text') {
         icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"/>';
@@ -116,7 +113,6 @@
       }
     });
 
-    // Form validation and enhancement
     const form = document.querySelector('form');
     const inputs = form.querySelectorAll('input[required]');
     
@@ -136,7 +132,6 @@
       });
     });
 
-    // Form submission enhancement
     form.addEventListener('submit', function(e) {
       let isValid = true;
       
@@ -149,7 +144,6 @@
       
       if (!isValid) {
         e.preventDefault();
-        // Show error message
         const errorDiv = document.createElement('div');
         errorDiv.className = 'mb-4 flex items-center bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl';
         errorDiv.innerHTML = `

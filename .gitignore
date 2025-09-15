@@ -1,0 +1,34 @@
+# Node
+node_modules/
+
+# Env
+.env
+.env.*
+
+# OS/Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build artifacts
+coverage/
+dist/
+build/
+.tmp/
+
+# Uploads (keep folder structure with .gitkeep)
+uploads/images/*
+!uploads/images/.gitkeep
+uploads/pdfs/*
+!uploads/pdfs/.gitkeep
+uploads/others/*
+!uploads/others/.gitkeep
