@@ -56,12 +56,11 @@ const storage = multer.diskStorage({
     ) {
       cb(null, "uploads/pdfs");
     } else {
-      cb(null, "uploads/others"); // Fallback for other file types
+      cb(null, "uploads/others");
     }
   },
   filename: (req, file, cb) => {
-    // cb(null, new Date().toISOString() + "-" + file.originalname);
-    cb(null, randomString(10) + "-" + file.originalname);
+    cb(null, new Date().toISOString() + "-" + file.originalname);
   },
 });
 
@@ -73,8 +72,8 @@ const fileFilter = (req, file, cb) => {
   ) {
     cb(null, true);
   } else if (
-    file.mimetype === "application/pdf" || // .doc
-    file.mimetype === "application/docx" || // .docx
+    file.mimetype === "application/pdf" || 
+    file.mimetype === "application/docx" ||
     file.mimetype === "text/txt"
   ) {
     cb(null, true);
@@ -92,8 +91,6 @@ app.use(express.urlencoded());
 app.use(express.static(path.join(rootDir, "public")));
 // app.use(multer(multerOption).single("photo"));
 app.use(multer(multerOption).any());
-// app.use(multer(multerOption).array("photo"));
-// app.use(multer(multerOption).array("rulesPdf"));
 app.use("/uploads", express.static(path.join(rootDir, "uploads")));
 app.use("/host/uploads", express.static(path.join(rootDir, "uploads")));
 app.use("/homes/uploads", express.static(path.join(rootDir, "uploads")));

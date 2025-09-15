@@ -67,7 +67,6 @@ exports.getHomeDetails = (req, res, next) => {
       console.log("Home not found");
       res.redirect("/homes");
     } else {
-      console.log("home ===", home);
       res.render("store/home-detail", {
         home: home,
         pageTitle: "Home Detail",

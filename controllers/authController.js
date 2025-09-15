@@ -3,7 +3,6 @@ const bcrypt = require("bcryptjs");
 
 const User = require("../models/user");
 exports.getSignup = (req, res, next) => {
-  console.log("Signup called");
   res.render("auth/signup", {
     pageTitle: "signup",
     currentPage: "signup",
@@ -40,8 +39,6 @@ exports.postSignup = [
     .withMessage("Password shold be atleast one character")
     .matches(/[0-9]/)
     .withMessage("Password should be atleast one number")
-    // .matches(/[!@#$%^&*()_+{}\[\]:;<>,.?]/)
-    // .withMessage("Password should be atleast one special character")
     .trim(),
 
   check("confirmPassword")
@@ -81,7 +78,6 @@ exports.postSignup = [
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.log("error >>>>", errors);
       return res.status(422).render("auth/signup", {
         pageTitle: "Signup",
         currentPage: "signup",
@@ -161,7 +157,6 @@ exports.postLogin = async (req, res, next) => {
 };
 
 exports.postLogout = (req, res, next) => {
-  console.log("logout request", req.body);
   req.session.isLoggedIn = false;
   req.session.destroy((err) => {
     if (err) {

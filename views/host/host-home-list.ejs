@@ -154,7 +154,7 @@
                             Start your hosting journey by listing your first property. Share your space with travelers from around the world!
                         </p>
                         <a href="/host/add-home"
-                            class="bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white px-8 py-4 rounded-2xl shadow-xl transition-all duration-200 transform hover:-translate-y-1 hover:shadow-2xl text-lg font-semibold">
+                            class="inline-block bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white px-8 py-4 rounded-2xl shadow-xl transition-all duration-200 transform hover:-translate-y-1 hover:shadow-2xl text-lg font-semibold">
                             <span class="flex items-center space-x-3">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -168,50 +168,4 @@
         </main>
 
         <%- include('../partials/footer') %>
-
-            <style>
-                @keyframes blob {
-                    0% {
-                        transform: translate(0px, 0px) scale(1);
-                    }
-
-                    33% {
-                        transform: translate(30px, -50px) scale(1.1);
-                    }
-
-                    66% {
-                        transform: translate(-20px, 20px) scale(0.9);
-                    }
-
-                    100% {
-                        transform: translate(0px, 0px) scale(1);
-                    }
-                }
-
-                .animate-blob {
-                    animation: blob 7s infinite;
-                }
-
-                .animation-delay-2000 {
-                    animation-delay: 2s;
-                }
-
-                .line-clamp-1 {
-                    display: -webkit-box;
-                    -webkit-line-clamp: 1;
-                    line-clamp: 1;
-                    -webkit-box-orient: vertical;
-                    overflow: hidden;
-                }
-
-                .line-clamp-2 {
-                    display: -webkit-box;
-                    -webkit-line-clamp: 2;
-                    line-clamp: 2;
-                    -webkit-box-orient: vertical;
-                    overflow: hidden;
-                }
-            </style>
-    </body>
-
     </html>

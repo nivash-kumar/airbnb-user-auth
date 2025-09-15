@@ -441,15 +441,12 @@
     </div>
   </div>
 
-  <!-- Enhanced JavaScript for Navigation -->
   <script>
-    // Mobile menu toggle with smooth animation
     const menuToggle = document.getElementById("menu-toggle");
     const mobileMenu = document.getElementById("mobile-menu");
 
     menuToggle.addEventListener("click", function () {
       mobileMenu.classList.toggle("hidden");
-      // Add smooth slide animation
       if (!mobileMenu.classList.contains("hidden")) {
         mobileMenu.style.transform = "translateY(0)";
         mobileMenu.style.opacity = "1";
@@ -459,7 +456,6 @@
       }
     });
 
-    // Close mobile menu when clicking outside
     document.addEventListener("click", function (event) {
       if (
         !menuToggle.contains(event.target) &&
@@ -469,13 +465,11 @@
       }
     });
 
-    // Disabled bookings link with better UX
     const bookingsLink = document.getElementById("bookings");
     if (bookingsLink) {
       bookingsLink.addEventListener("click", function (event) {
         event.preventDefault();
 
-        // Create a toast notification instead of alert
         const toast = document.createElement("div");
         toast.className =
           "fixed top-20 right-4 bg-yellow-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform transition-all duration-300 translate-x-full";
@@ -490,12 +484,10 @@
 
         document.body.appendChild(toast);
 
-        // Animate in
         setTimeout(() => {
           toast.classList.remove("translate-x-full");
         }, 100);
 
-        // Remove after 3 seconds
         setTimeout(() => {
           toast.classList.add("translate-x-full");
           setTimeout(() => {
@@ -505,7 +497,6 @@
       });
     }
 
-    // Add scroll effect to header
     window.addEventListener("scroll", function () {
       const header = document.querySelector("header");
       if (window.scrollY > 10) {

@@ -22,7 +22,7 @@ const userSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Home'
     }],
-    addedHomes: [{
+    hostedHomes: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Home'
     }],
